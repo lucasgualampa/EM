@@ -15,11 +15,12 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    // search all employee
+    // find all employee
     public List<Employee> getEmployees(){
         return employeeRepository.findAll();
     }
-    // search employee by id
+
+    // find employee by id
     public Employee getEmployee(Integer id){
         return employeeRepository.findById(id)
                 .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND));

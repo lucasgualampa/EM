@@ -8,11 +8,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/employees")
+@RequestMapping(value = "/employees", produces = "application/json", method = {RequestMethod.GET, RequestMethod.DELETE, RequestMethod.POST, RequestMethod.PUT})
 public class EmployeeController {
 
     @Autowired
@@ -24,9 +25,9 @@ public class EmployeeController {
         return new ResponseEntity<>(employeeService.getEmployees(), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/find/{id}")
     @Operation(summary = "Get employee by id")
-    public ResponseEntity<Employee> getEmployee(@PathVariable("id") Integer id){
+    public ResponseEntity<Employee> getEmployee(@PathParam("id") Integer id){
         return new ResponseEntity<>(employeeService.getEmployee(id), HttpStatus.OK);
     }
 
@@ -42,9 +43,9 @@ public class EmployeeController {
         return new ResponseEntity<>(employeeService.editEmployee(employee), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     @Operation(summary = "Delete employee")
-    public ResponseEntity<?> deleteEmployee(@PathVariable("id") Integer id){
+    public ResponseEntity<?> deleteEmployee(@PathParam("id") Integer id){
         employeeService.deleteEmployee(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
